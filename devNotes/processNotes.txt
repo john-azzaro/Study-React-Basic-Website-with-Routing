@@ -170,5 +170,6 @@ How do you setup React router?
 
 
 
-  How do you add routes and navigation?
-  =====================================
+How do you add routes and navigation?
+=====================================
+  * So suppose you want to create a borchure website with 4 seperate pages.
