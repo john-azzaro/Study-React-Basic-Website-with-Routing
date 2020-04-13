@@ -18,3 +18,124 @@ one as well so I would urge you to consider at least doing a rough summary for y
 
 Objective of Study
 ==================
+The objective of the website with routing is to explore the implementation of clientside routing.
+
+
+
+
+
+
+# What is React Router?
+=======================
+  * Adding React Router to an application is like having pre-set stations on a television. Instead of clicking up and down to find the 
+    channel you are looking for, you simply need to go straight to pre-set channel you are looking for. 
+
+
+# What is a route?
+==================
+  * Routes in a javascript web application are like pre-set "states", or as the analogy would put it, the channels for the televsion. 
+  * Users can navigate to routes directly instead of having to update the state through manual interactions with the page.
+  * Routes are controlled in a React application by using the /path part of the application's URL.
+
+
+# Why use routing?
+==================
+  * A JavaScript web application with routing would require different routes.
+  * For example, if you think about the television example, WITHOUT routing requires that in order to get to channel 50, you would
+    need to go through the entire journey to get to question 50. This presents a problem.
+  * WITH routing, you can add an extra control for the application state: THE URL PATH!
+  * For example:
+      * https://my-quiz.com/             :  Shows the welcome page.
+      * https://my-quiz.com/about        :  Shows the about page for the quiz.
+      * https://my-quiz.com/question/1   :  Shows the first question in the quiz.
+      * https://my-quiz.com/question/2   :  Shows the second question in the quiz.
+  
+  * The path at the end of each URL holds extra state for the JavaScript application. In doing this, you dont need a bulky index but
+    instead you can use the "path" part of the address to control the current question.
+
+
+  EXAMPLE OF NON-ROUTING vs ROUTING
+  ==================================
+  * In the example below, a pseudo-quiz that DOES NOT use routing requires many steps. The initial state is set to 0, the next question
+    is its own event handler, etc.
+  * What is important to take keep in mind here is that in order to get to question 3, you would have to click 3 times through the quiz
+    to even get to the question. And if you wanted to go straight to question 3, you would have no way of doing that.
+
+        ------------------------------------------------------------------------
+          class QuizApp extends React.Component {
+            state = {                                                                    // Initial state of the quiz is always set to the first question.
+              currentQuestionIndex: 0,
+            };
+
+            goToNextQuestion = () => {                                                   // This event handler will increment the question displayed when clicked.
+              this.setState({
+                currentQuestionIndex: this.state.currentQuestionIndex + 1
+              })
+            };
+
+            render() {                                                                   // on render...
+              const { currentQuestionIndex } = this.state;                               // the initial currentQuestion will be set to the state of 0 (first question)...
+              
+              let comp;                                                                  // Depending on the current question, a different component will be used...
+              if (currentQuestionIndex === 0) {                                          // So if the question is the first (0), then...
+                comp = <QuestionOne />;                                                  // ... the "QuestionOne" component will be returned in the JSX.
+              } else if (currentQuestionIndex === 1) {
+                comp = <QuestionTwo />;
+              } else if (currentQuestionIndex === 2) {
+                comp = <QuestionThree />;
+              } else if (currentQuestionIndex === 3) {
+                comp = <QuestionFour />;
+              }
+              /* else if, etc... for more questions */
+              return (
+                <div>
+                  {comp}
+                  <button onClick={this.goToNextQuestion}>
+                    Next question
+                  </button>
+                </div>
+              )
+            }
+          }
+        -----------------------------------------------------------------------
+
+    * In the example below, the ReactRouter encloses each of the routes with a path prop to the question.
+    * By using routing, when you open an application starting at question 10, it will go to question 10.
+    * EACH COMPONENT HAS ITS OWN DEDICATED PATH.
+        ------------------------------------------------------------------------
+            class App extends React.Component {
+              // no need for custom state!
+
+              render() {
+                return (
+                  <ReactRouter>                                                      // ReactRouter...
+                    <HomePageRoute path={'/'} />                                     //... with the path to each question!
+                    <QuestionOneRoute path={'/question/1'} />
+                    <QuestionTwoRoute path={'/question/2'} />
+                    <QuestionThreeRoute path={'/question/3'} />
+                    {/* ... */}
+                    <QuestionSixRoute path={'/question/6'} />
+                  </ReactRouter>
+                )
+              }
+            }
+        ------------------------------------------------------------------------
+
+
+
+
+
+What is react routing?
+======================
+  * React Router is a library that lets us render different components depending on the URL's path. It allows us to 
+    synchronize our application to the current path of our webpage.
+  * React routing can: 
+      * Programmatically change the /path of our page in the browser address bar without the need for a complete page load. 
+        It's a state change, not a different webpage!
+      * Integrate with the browser so that the "back" and "forward" buttons will work seamlessly with our routes.
+      * Be driven by React Components, this is "idiomatic" to React developers; using components instead of configurations.
+      * Have sophisticated routing compositions, for example, dynamic and nested routes.
+
+
+
+
