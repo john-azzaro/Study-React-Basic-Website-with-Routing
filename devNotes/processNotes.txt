@@ -142,4 +142,33 @@ What is react routing?
 
 How do you setup React router?
 ==============================
-  * 
+  * To setup react router, you simply need to install the react router package.
+  * There are a few react router packages for different platfroms, like mobile, etc.
+  * You will want the DOM version: 
+
+                  "npm install react-router-dom"
+
+  * Once you have the router package installed, you need to add the router to your App.
+  ------------------------------------------------------------------------
+      import React from 'react';
+      import ReactDOM from 'react-dom';
+      import { BrowserRouter } from "react-router-dom";                        // import BrowserRouter from the react-router-dom package.
+      import './index.css';
+      import App from './App';
+
+      ReactDOM.render(
+        <BrowserRouter>                                                        // Nest "App" inside the "BrowserRouter" component to add router capabilities.
+          <App />
+        </BrowserRouter>,
+        document.getElementById('root')
+      );
+  ------------------------------------------------------------------------
+
+  * What this does is add a "Router" component that wraps the existing App component.
+
+
+
+
+
+  How do you add routes and navigation?
+  =====================================
