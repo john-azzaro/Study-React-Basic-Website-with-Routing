@@ -236,6 +236,10 @@ How do you create a route?
   3.  Add your route component:
     * In this instance, our "home" component is begin replaced by a Route path with a "path" prop value pointing 
       to "/" and the component value being the HomePage component passed in from out previous step above.
+
+    * HOWEVER, the way path works would return BOTH pages if you leave the paths as they are. Why? This is because
+      both have the "/" in the path. To fix this, you need to add the word "exact" to it to make sure that for the
+      route component,  we only want this EXACT component to show for this URL.
     --------------------------------------------------------------------
       export default class App extends Component {
         render() {
@@ -248,7 +252,7 @@ How do you create a route?
                 <Header />
               </header>
               <main>
-                <Route path='/' component={HomePage} />                  // Replace your HomePage component with a Route with path and component information.
+                <Route exact path='/' component={HomePage} />           // Replace your HomePage component with a Route with "exact path" and component equal to the Homepage component.
               </main>
               <footer>
                 <Footer />
@@ -259,5 +263,21 @@ How do you create a route?
       }
     --------------------------------------------------------------------
 
-    4. 
   
+
+  # How do you navigate WITHOUT a page load?
+  ==========================================
+    * As it stands, if you were to simply use the Route path as is, each page would trigger a FULL page reload
+      everytime you clicked on a page.
+    * To avoid this, you need to use the "Link" component from the react-router-dom library.
+    * The "Link" component will use a browser feature (and JavaScript) to pretend to do a complete page load.
+
+    1. First, import the "Link" component to your Nav.js file:
+      --------------------------------------------------------------------
+        import { Link} from 'react-router-dom'
+      --------------------------------------------------------------------
+  
+    2. Replace any href anchor links with "Link" elements and "to" props that point to the correct URL.
+      --------------------------------------------------------------------
+        
+      --------------------------------------------------------------------
