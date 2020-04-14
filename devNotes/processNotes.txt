@@ -271,6 +271,8 @@ How do you create a route?
       everytime you clicked on a page.
     * To avoid this, you need to use the "Link" component from the react-router-dom library.
     * The "Link" component will use a browser feature (and JavaScript) to pretend to do a complete page load.
+    * When you use a "Link" component instead of a standard anchor element for your page links, you will only
+      update components that are being rendered even though the web address at the top is updating the path.
 
     1. First, import the "Link" component to your Nav.js file:
       --------------------------------------------------------------------
@@ -279,5 +281,54 @@ How do you create a route?
   
     2. Replace any href anchor links with "Link" elements and "to" props that point to the correct URL.
       --------------------------------------------------------------------
-        
+        import React, { Component } from 'react'
+        import { Link } from 'react-router-dom'
+        import Content from './Content'
+        import './Nav.css'
+
+        export default class Nav extends Component {
+          render() {
+            return (
+              <Content className='Nav'>
+                <Link to='/'>                                                 // Replaced anchor tag with Link and "to" prop.
+                  Home
+                </Link>
+                <Link to='/about'>
+                  About
+                  </Link>
+                <Link to='/workouts'>
+                  Workouts
+                </Link>
+              </Content>
+            )
+          }
+        }
       --------------------------------------------------------------------
+
+
+
+
+
+  How do you add a "page not found" page?
+  =======================================
+    * Within the route library, there is a "NotFounfPage" component that you can use to display a message
+      if the user types in a wrong address.
+    * You can also use the "switch" component as well, which will render only one of its child route components.
+      In other words, if the first route component matches, it will render the path... if not, the only one that 
+      does not have a path... the pathless NotFoundPage component. However, NotFoundPage seems to be the simplest
+      way to execute this functionality.
+
+    1. Import "NotFoundPage" to your App.js file:
+      -----------------------------------------------------------------------
+        import NotFoundPage from './NotFoundPage'
+      -----------------------------------------------------------------------
+
+    2. Wire NotFoundPage to a Route with NO PATH:
+      -----------------------------------------------------------------------
+         <main>
+          <Route exact path='/' component={HomePage} />
+          <Route path='/about' component={AboutPage} />
+          <Route path='/workouts' component={WorkoutsPage} />
+          <Route component={NotFoundPage} />                                    // Route with no path... will show 
+        </main>
+      -----------------------------------------------------------------------
