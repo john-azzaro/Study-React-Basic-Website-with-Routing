@@ -323,7 +323,16 @@ How do you create a route?
         import NotFoundPage from './NotFoundPage'
       -----------------------------------------------------------------------
 
-    2. Wire NotFoundPage to a Route with NO PATH:
+    2. Import "Switch" with "Route" module:
+      * The swtich component will render only one of its Route components. So what this does 
+        is that it will only render the first component that has a match. In this case, if there
+        are no matches, then ONLY the NotFoundPage will render. 
+      -----------------------------------------------------------------------
+        import { Route, Switch } from 'react-router-dom'
+      -----------------------------------------------------------------------
+
+
+    3. Wire NotFoundPage to a Route with NO PATH:
       -----------------------------------------------------------------------
          <main>
           <Route exact path='/' component={HomePage} />
@@ -331,6 +340,20 @@ How do you create a route?
           <Route path='/workouts' component={WorkoutsPage} />
           <Route component={NotFoundPage} />                                    // Route with no path... will show 
         </main>
+      -----------------------------------------------------------------------
+
+    4. Wrap you components in a switch component to render ONLY ONE COMPONENT:
+      -----------------------------------------------------------------------
+        ...
+        <main>
+          <Switch>                                                              // Components wrapped in a Swtich component.
+            <Route exact path='/' component={HomePage} />
+            <Route path='/about' component={AboutPage} />
+            <Route path='/workouts' component={WorkoutsPage} />
+            <Route component={NotFoundPage} />
+          </Switch>         
+        </main>
+        ...
       -----------------------------------------------------------------------
 
 
