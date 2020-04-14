@@ -332,3 +332,142 @@ How do you create a route?
           <Route component={NotFoundPage} />                                    // Route with no path... will show 
         </main>
       -----------------------------------------------------------------------
+
+
+
+
+
+How do you make dynamic routes?
+===============================
+  >>NOTE<< This part of the study is located in another repo named "Study-React-Dynamic-Routing". If you want to see the 
+           the program in all its goodness, check out the app there. I decided to keep the bulk of the study on this document
+           so that it is easier to find and follow along with.
+
+
+  1. Import Route library to App:
+    ------------------------------------------------------------------------
+      import { Route } from 'react-router-dom'
+    ------------------------------------------------------------------------
+
+  2. Use "Route" and wireup the path and component:
+    ------------------------------------------------------------------------
+      class App extends Component {
+        render() {
+          return (
+            <div className='App'>
+              <nav>
+                <a href='/'>Poem List</a>
+              </nav>
+              <header>
+                <h1>William Setstatespear</h1>
+              </header>
+              <main>
+                <Route                                                            // Route with...
+                  exact path='/'                                                  // exact path (since you want to just have this when you see the PoemListPage)
+                  component={PoemListPage}                                        // and link the PoemListPage component.
+                />
+              </main>
+              <footer>
+                <p>© WilliamSetstatespear, 2018. All Rights Reserved.</p>
+              </footer>
+            </div>
+          );
+        }
+      }
+    ------------------------------------------------------------------------
+
+    3. In PoemListPage, note the mapping over each poem in storage.
+    -------------------------------------------------------------------------
+      export default function PoemListPage() {
+        return (
+          <>
+            <p>Choose a poem from the list below.</p>
+            <ul className='PoemList'>
+              {POEMS.map(poem =>                                               // In poemListPage, we map over each peom to create li instances.
+                <li key={poem.id}>
+                  <a href={`/poem/${poem.id}`}>                                // each li instance has an created anchor element with a dynamic href.
+                    {poem.title}
+                  </a>
+                </li>
+              )}
+            </ul>
+          </>
+        )
+      }
+    -------------------------------------------------------------------------
+
+     
+    4. Make a dynamic path with route param
+        * React router supports dynamic path parameters for this purpose, we can make part of our path dynamic. 
+        * You can think about dynamic paths in a way similar to inserting a variable in part of the path. 
+        * To define part of the path as dynamic, we prefix that part with a colon.
+        * For example, with the following Route:
+
+                    <Route path='/fixed/:dynamic' />
+
+        * The /fixed part of the URL is static and the :dynamic part is dynamic because it's prefixed with a colon, :. 
+        * The dynamic part is called a route parameter.
+        * The following paths would all match for the above Route example and populate the dynamic variable appropriately.
+            * /fixed/foo, would match with route parameters { dynamic: 'foo' }
+            * /fixed/bar, would match with route parameters { dynamic: 'bar' }
+            * /fixed/123, would match with route parameters { dynamic: '123' }
+            * /fixed, wouldn't match
+            * /something-else/foo, wouldn't match
+      --------------------------------------------------------------
+        ...
+        ...
+        <main>
+          <Route
+            exact path='/'
+            component={PoemListPage}
+          />
+          <Route                                           
+            path='/poem/:poemId'                                     // This added a dynamic path... the /poem part is fixed and the /:poemId us dynamic with a route param called poemId
+            component={poemPage}                                     // and the component will be the PoemPage (but will now be the specific poem set by poemId)
+          />
+        </main>
+        ...
+        ...
+      ---------------------------------------------------------------
+      
+
+
+
+
+How do you use Link Components with dynamic routing?
+====================================================
+  * For Link components (which we want to do to skip the full page load), all we need to do is import
+    the Link portion of the library in and then convert an anchor tags to Link elements.
+  * Again, this is so that the experience is a little smoother for the user and full page loads do not happen.
+
+  1. Import the Link component library
+    ---------------------------------------------------------------------
+      import { Route, Link } from 'react-router-dom'                          // this is added via destructuring.
+    ---------------------------------------------------------------------
+
+  2. Replace any anchor tags with Link elements:
+    ---------------------------------------------------------------------
+        <nav>
+          <Link to='/'>Poem List</Link>                                     // Link replaces anchor elements.
+        </nav>
+    ---------------------------------------------------------------------
+
+  3. And then replace any href elements with Links in associated pages:
+    ----------------------------------------------------------------------
+        export default function PoemListPage() {
+          return (
+            <>
+              <p>Choose a poem from the list below.</p>
+              <ul className='PoemList'>
+                {POEMS.map(poem =>
+                  <li key={poem.id}>
+                    <Link to={`/poem/${poem.id}`}>                          // Link replaces anchor elements
+                      {poem.title}
+                    </Link>
+                  </li>
+                )}
+              </ul>
+            </>
+          )
+        }
+    ----------------------------------------------------------------------
