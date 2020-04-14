@@ -172,4 +172,92 @@ How do you setup React router?
 
 How do you add routes and navigation?
 =====================================
-  * So suppose you want to create a borchure website with 4 seperate pages.
+  * So suppose you want to create a borchure website with 4 seperate pages: Nav, Header, HomePage, and Footer.
+  * The component tree would look something like this:
+    ----------------------------------------------------------------------
+      v BrowserRouter
+        v Router
+          v Router.Provider
+            v App 
+              v Nav 
+                  Content
+              v Header
+                  Content
+              v HomePage 
+                  Content 
+              v Footer
+                  Content
+    ----------------------------------------------------------------------
+
+  ## ADD PATH AND ROUTE PROPS TO A ROUTE COMPONENT
+  ================================================
+  * First, you need to add "path" and "route" props to the Route component.  
+  * To use a route component that will render another component when a certain path is in the URL address, you 
+    need to add two props to a Route component:
+      -----------------------------------------------------------------
+          function myComponent() {
+            return <p>This is shown when the path is /the-path </p>
+          }
+
+          <Route 
+            path="/the-path"                                             // "path" prop with the URL path.
+            component={myComponent}                                      // "component" prop with the component passed in.
+          />
+      -----------------------------------------------------------------
+
+  
+
+
+How do you create a route?
+===========================
+
+  1. Import Route component from react-router:
+    --------------------------------------------------------------------
+      import React, { Component } from 'react'
+      import { Route } from 'react-router-dom'                           // Import Route from the react-router-dom package.  
+      import HomePage from './HomePage'           
+      import './App.css'
+
+      export default class App extends Component {...}
+    --------------------------------------------------------------------
+  
+  2. Import the Page component to your App.js file.
+    --------------------------------------------------------------------
+      import React, { Component } from 'react'
+      import Nav from './Nav'
+      import Header from './Header'
+      import Footer from './Footer'
+      import HomePage from './HomePage'                                  // import the page to your file.    
+      import './App.css'
+
+      export default class App extends Component {...}
+    --------------------------------------------------------------------
+
+  3.  Add your route component:
+    * In this instance, our "home" component is begin replaced by a Route path with a "path" prop value pointing 
+      to "/" and the component value being the HomePage component passed in from out previous step above.
+    --------------------------------------------------------------------
+      export default class App extends Component {
+        render() {
+          return (
+            <div className='App'>
+              <nav>
+                <Nav />
+              </nav>
+              <header>
+                <Header />
+              </header>
+              <main>
+                <Route path='/' component={HomePage} />                  // Replace your HomePage component with a Route with path and component information.
+              </main>
+              <footer>
+                <Footer />
+              </footer>
+            </div>
+          )
+        }
+      }
+    --------------------------------------------------------------------
+
+    4. 
+  
