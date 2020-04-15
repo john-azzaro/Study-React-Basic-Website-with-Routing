@@ -20,6 +20,20 @@ Objective of Study
 ==================
 The objective of the website with routing is to explore the implementation of clientside routing.
 
+To use React Router, you need to use the react-router-dom module, which you need to import to each file you implement it on.
+When you do this, you get a library of components and tools to make single-page-application (SPA) support multiple paths.
+Each path in the SPA is a snapshot of the application in a certain state.
+
+To enable your application to use React router features, you first need to wrap the entire App in a "BrowserRouter" component.
+Then, you can setup Routes that display components in a certain path.
+
+You use "Link" components in place of anchor tags or buttons. These can trigger navigationt o different paths which display different routes.
+
+You can tirgger navigation programmatically by using the history object provided by React Router. 
+The history object contains a push method for triggering navigation or a goBack method to go back to the previous page.
+Programmatic navaigation is usedul for navigating after events or under certain conditions, like after a successful API request or the user
+not being logged in so they dont have permission to visit that route.
+
 
 
 
@@ -499,8 +513,8 @@ How do you use Link Components with dynamic routing?
 
   
 
-What is programatic navigation?
-===============================
+What is History and programatic navigation?
+============================================
   * For times when you need to navigate to another route programmatically, which means you nee dyour JavaScript
     code to send the user to another route, you'll need to think differently about routes.
   * Some of the times you might need to do this is when:
@@ -509,7 +523,106 @@ What is programatic navigation?
     * After clicking a link, depending on the type of user, you might want to navigate to a different route.
 
 
+  * History is a sub-library in the react-router library and comes with the installation of react-router.
+  * History can do things like subscribing to navigation changes, checking how many navigation events have taken place, 
+    programmatically navigating.
+  * You can access hitory in a few different ways:
+
+      1. Props in the router component.
+        * Inside the Router component, you can access the props.history and access mulitple methods like go, goBack, etc.
+
+      2. Route Props parameter to render prop.
+        * The function that we give to the render prop is given a parameter called "Route-props".
+        * Route-Props has keys for match, location, and history.
+        * You can deconstruct the history key out of the route props when describing the function params 
+          like this: render={({ history }) => {...}.
+        * When you do this, you have access to the history object directly to one of the routes.
+
+        In App.js, it would look something like this:
+        ---------------------------------------------------------------------------
+            render() {
+              const { bookmarks } = this.state
+              return (
+                <main className='App'>
+                  <h1>Bookmarks!</h1>
+                  <Nav />
+                  <div className='content' aria-live='polite'>
+                    <Route
+                      path='/add-bookmark'
+                      render={({ history }) => {                                        // use route props to render prop.
+                        console.log(history)
+                        return <AddBookmark
+                          onAddBookmark={this.addBookmark}
+                          onClickCancel={() => {/* what here? */}}
+                        />
+                      }}
+                      />
+                      <Route
+                        exact
+                        path='/'
+                        render={() =>
+                          <BookmarkList
+                          bookmarks={bookmarks}
+                        />}
+                      />
+                  </div>
+                </main>
+              );
+            }
+        ---------------------------------------------------------------------------
+
+  3. Components passed as component prop to Route.
+    *  To make it a little more simplified, you can simply pass the component on the route, the
+       match, location, and history would get passed directly to the AddBookmark component.
+    * This is a little wonky though, so best to use the second method above.
 
 
-What is History for routes?
-===========================
+
+  ## Use "push" to programatically navigate.
+  * To programmitcally navigate, the history object provides a methed called "push".
+  * You can push and can supply the path you want to programatically navigate to.
+    ---------------------------------------------------------------------------------
+        render() {
+        const { bookmarks } = this.state
+        return (
+          <main className='App'>
+            <h1>Bookmarks!</h1>
+            <Nav />
+            <div className='content' aria-live='polite'>
+              <Route
+                path='/add-bookmark'
+                render={({ history }) => {
+                  return <AddBookmark
+                    onAddBookmark={this.addBookmark}
+                    onClickCancel={() => history.push('/')}                              // on cancel, the history.push will go to the specified url... /.
+                  />
+                }}
+                />
+                <Route
+                  exact
+                  path='/'
+                  render={() =>
+                    <BookmarkList
+                    bookmarks={bookmarks}
+                  />}
+                />
+            </div>
+          </main>
+        );
+      }
+    ---------------------------------------------------------------------------------
+
+
+
+  ## Navigate to a url with withRouter when an action is successful.
+    * When you want to navigate after a successful submission or action, you need to use the "withRouter" module.
+
+    1. First, import the withRouter library from react-router-dom.
+      -------------------------------------------------------------------------------
+        import { withRouter } from 'react-router-dom';
+      -------------------------------------------------------------------------------
+
+    2. Second, wrap the component inside the "withRouter" method.
+      -------------------------------------------------------------------------------
+        export default withRouter(AddBookmark);
+      -------------------------------------------------------------------------------
