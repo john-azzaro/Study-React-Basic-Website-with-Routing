@@ -494,3 +494,22 @@ How do you use Link Components with dynamic routing?
           )
         }
     ----------------------------------------------------------------------
+
+
+
+  
+
+What is programatic navigation?
+===============================
+  * For times when you need to navigate to another route programmatically, which means you nee dyour JavaScript
+    code to send the user to another route, you'll need to think differently about routes.
+  * Some of the times you might need to do this is when:
+    * After a user submits a login-form. Only if the submission is successful, redirect the user to the homepage.
+    * After filling out a form that adds a new item to a list, redirect the user back to the list.
+    * After clicking a link, depending on the type of user, you might want to navigate to a different route.
+
+
+
+
+What is History for routes?
+===========================
